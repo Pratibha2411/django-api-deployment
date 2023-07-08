@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{% block body %}
+{% load cart %}
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-warning">Cart</h1>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Serial no.</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Price</th>
+                  </tr>
+                </thead>
+                {% for food in foods%}
+                <tbody>
+                  {% comment %} {{request.session.cart}} {% endcomment %}
+                  
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td> <img src="{{food.image.url}}"style="width: 4rem;" class="card-img-top" alt="..."></td>
+                    <td>{{food.name}}</td>
+                    <td>{{food.price}}</td>
+                  </tr>
+                </tbody>
+                {% endfor %}
+                <tfoot>
+                  <tr>
+                      <th colspan="5" class="text-center">Total</th>
+                      <th></th>
+                  </tr>
+              </tfoot>
+              </table>
+        </div>
+    </div>
+
+
+    <div class="col">
+        <h1 class="text-success">Orders</h1>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">serial no.</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} {% endblock %}
+{%block nav %}      <div id="categories">
+  <li class="nav-item dropdown  ">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Filters
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      {% for category in categories%}
+      <li><a class="dropdown-item" href="/?category={{category.id}}">{{category.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </li>
+</div>{% endblock %}
+{% block body %}
+{% load cart %}
+<br>
+<br>
+<br>
+<div class="container-fluid">
+<div id="foods"class="col-lg-12" >
+    <div class="row p-4 " >
+      {% for food in foods %}
+        <div class="card p-4 mx-2 my-1"  id="{{food.id}}" style="width: 18rem;">
+            <img src="{{food.image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{food.name}}</h5>
+              <p class="card-text"> {{food.price}}</p>
+              {% comment %} {{food|is_in_cart:request.session.cart}} {% endcomment %}
+              <a href="#" class="btn btn-dark mx-auto mb-2">{{food.category.name}}</a> 
+              {% if food|is_in_cart:request.session.cart%}
+              <div class="row">
+               <form action="/#{{food.id}}" method="POST">
+                {% csrf_token %}
+                <input type="text" hidden class="btn btn-warning col mx-1"name="remove"  value="{{food.id}}"></input>
+                {% comment %} <input type="text" hidden class="btn btn-warning col mx-1" name="remove" value="True"></input> {% endcomment %}
+                <input type="submit" class="btn btn-warning col mx-1" value="Remove"></input>
+               </form>                                                       
+              
+              </div>
+
+              {%else%}
+              <div class="row">
+                <form action="/#{{food.id}}" method="POST">
+                 {% csrf_token %}
+                 <input type="text" hidden class="btn btn-warning col mx-1" name="food_item" value="{{food.id}}"></input>
+                 <input type="submit" class="btn btn-warning col mx-1" value="Add"></input>
+                 
+                </form> 
+               
+               </div>
+               {%endif%}
+            </div>
+          </div>
+      {% endfor  %}                  
+    </div>
+</div>
+</div>     
+{% endblock %} 
