@@ -34,7 +34,8 @@ class Home(View):
             foods= Food_item.get_all_product_by_id(categoryID)
         else:
             foods= Food_item.get_all_food()
-        
+            
+            
         data={}
         data['foods']=foods
         data['categories']=categories

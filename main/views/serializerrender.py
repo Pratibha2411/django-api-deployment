@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from main.models.food_item import Food_item
 from main.models.category import  Category

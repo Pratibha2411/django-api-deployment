@@ -21,3 +21,20 @@ class Food_item(models.Model):
             return Food_item.objects.filter(category=category_id)
         else:
             return Food_item.get_all_food()
+        
+    @staticmethod
+    def total_price(id):
+        t=0
+        total=Food_item.objects.filter(id__in=id)
+        for i in total:
+            t+=i.price
+        return t        
+              
+    @staticmethod
+    def order(id):
+        total=Food_item.objects.filter(id__in=id)
+        for i in total:
+            it=i.name
+            p=i.price
+        return it,p                 
+              

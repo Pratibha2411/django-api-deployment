@@ -1,14 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from main.models.customer import Customer
+from django.contrib.auth.hashers import check_password
 from django.views import View
 from main.models.food_item import Food_item
-
-class Cart(View):
-    def get(self,request):
-        cart=request.session.get("cart")
-        if cart:
-            ids=list(request.session.get('cart').keys())
-            cart=Food_item.get_product_in_cart(ids)
-            print(cart)    
-            return render(request, "orders.html",{'foods':cart})   
-        else:
-            return render(request, "orders.html",{'foods':cart})     
+from main.models.orders import Order
+from main.middlewares.auth import auth_middleware
+from django.utils.decorators import method_decorator
+class OrderView(View):
+    
+    @method_decorator(auth_middleware)
+    def get(self, request):
+        customer=request.session.get('customer')
+        orders=Order.get_order_by_customer(customer)
+        print(orders)
+        # orders=orders.reverse()
+        return render(request,'orders.html',{'orders':orders})
+        
+        
+        
